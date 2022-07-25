@@ -1,12 +1,15 @@
+#!/usr/bin/env python3
 from os import name
 from os import mkdir
 from os import listdir
 from os import remove
+from os import system
 from os.path import join
 from os.path import exists
 from os.path import dirname
 from sys import argv
 from sys import exit
+from typing import List
 from typing import NamedTuple
 from subprocess import run
 
@@ -34,16 +37,21 @@ def test_path():
 def test_libwebp():
     if name == "nt":
         try:
-            output = run("cwebp.exe -version", capture_output=True, check=False)
+            output = run(["cwebp.exe", "-version"], capture_output=True, check=False)
         except FileNotFoundError:
             print(f"Can't find 'cwebp.exe' in {dirname(__file__)!r}")
             print("Download libwebp from 'https://storage.googleapis.com/downloads.webmproject.org/releases/webp/index.html'")
             exit(-1)
-
-        version = output.stdout.decode().strip()
-        print(f"* libwepb version : {version}")
     else:
-        raise NotImplementedError
+        try:
+            output = run(["cwebp", "-version"], capture_output=True, check=False)
+        except FileNotFoundError:
+            print("Can't find 'cwebp' in this system")
+            print("Download libwebp from 'https://storage.googleapis.com/downloads.webmproject.org/releases/webp/index.html'")
+            exit(-1)
+
+    version = output.stdout.decode().strip()
+    print(f"* libwepb version : {version}")
 
 
 def get_ouput(name: str) -> str:
@@ -51,7 +59,7 @@ def get_ouput(name: str) -> str:
     return name + ".webp"
 
 
-def get_images() -> list[PathData]:
+def get_images() -> List[PathData]:
     return [
         PathData(
             input=join(INPUT, x),
@@ -88,13 +96,7 @@ def main():
     targets = get_images()
     for target in targets:
         print("*", target.x)
-        run(
-            get_command(
-                path=target
-            ),
-            check=False
-        )
-
+        system(get_command(path=target))
         print("\n")
 
 
