@@ -1,5 +1,9 @@
 # 2WebP
 
+Simple Script to convert to WebP 
+
 ```
-main.py [--ignore-ext] [-q <quailty>]
+main.py [-q <quailty>] [--ignore-ext]
 ```
+
+Use the `--ignore-ext` flag to convert files with missing file extensions.
