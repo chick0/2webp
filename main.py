@@ -51,6 +51,8 @@ def test_libwebp():
             output = run(["cwebp", "-version"], capture_output=True, check=False)
         except FileNotFoundError:
             print("Can't find 'cwebp' in this system")
+            print("Download libwebp from 'https://storage.googleapis.com/downloads.webmproject.org/releases/webp/index.html'")
+            print("or use your package manager")
             exit(-1)
 
     version = output.stdout.decode().strip()
