@@ -2,7 +2,6 @@
 from os import name
 from os import mkdir
 from os import listdir
-from os import remove
 from os import system
 from os.path import join
 from os.path import exists
@@ -27,11 +26,16 @@ def test_path():
     if not exists(INPUT):
         mkdir(INPUT)
 
+    if len(listdir(INPUT)):
+        print(f"* put your image to {INPUT}")
+        exit(-3)
+
     if not exists(OUTPUT):
         mkdir(OUTPUT)
     else:
-        for target_to_delete in listdir(OUTPUT):
-            remove(path=join(OUTPUT, target_to_delete))
+        if len(listdir(OUTPUT)) != 0:
+            print("* output directory is not empty")
+            exit(-2)
 
 
 def test_libwebp():
