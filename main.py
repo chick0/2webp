@@ -26,7 +26,7 @@ def test_path():
     if not exists(INPUT):
         mkdir(INPUT)
 
-    if len(listdir(INPUT)):
+    if len(listdir(INPUT)) == 0:
         print(f"* put your image to {INPUT}")
         exit(-3)
 
