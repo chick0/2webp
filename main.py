@@ -84,8 +84,8 @@ def get_quailty() -> int:
             raise ValueError
     except (ValueError, IndexError):
         quailty = 75
-    finally:
-        return quailty
+
+    return quailty
 
 
 def get_command(path: PathData) -> str:
@@ -94,7 +94,7 @@ def get_command(path: PathData) -> str:
     if name == "nt":
         exec += ".exe"
 
-    return exec + f" -q {get_quailty()} {path.input} -o {path.output}"
+    return exec + f" -q {get_quailty()} \"{path.input}\" -o \"{path.output}\""
 
 
 def main():
